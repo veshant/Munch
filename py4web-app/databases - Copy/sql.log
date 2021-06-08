@@ -1,0 +1,64 @@
+timestamp: 2021-04-14T23:50:49.993074
+CREATE TABLE "py4web_session"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "rkey" CHAR(512),
+    "rvalue" TEXT,
+    "expiration" INTEGER,
+    "created_on" TIMESTAMP,
+    "expires_on" TIMESTAMP
+);
+success!
+timestamp: 2021-04-14T23:50:50.001076
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "email" CHAR(512) UNIQUE,
+    "password" CHAR(512),
+    "first_name" CHAR(512),
+    "last_name" CHAR(512),
+    "sso_id" CHAR(512),
+    "action_token" CHAR(512),
+    "last_password_change" TIMESTAMP,
+    "past_passwords_hash" TEXT
+);
+success!
+timestamp: 2021-04-14T23:50:50.006075
+CREATE TABLE "auth_user_tag_groups"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "path" CHAR(512),
+    "record_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2021-04-21T20:14:34.693020
+CREATE TABLE "birds"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "bird" CHAR(512),
+    "weight" INTEGER,
+    "diet" CHAR(512),
+    "habitat" CHAR(512),
+    "n_sightings" INTEGER,
+    "created_by" CHAR(512),
+    "created_time" TIMESTAMP
+);
+success!
+DELETE FROM "birds";
+DELETE FROM sqlite_sequence WHERE name='birds'
+success!
+DELETE FROM "auth_user";
+DELETE FROM sqlite_sequence WHERE name='auth_user'
+success!
+DELETE FROM "birds";
+DELETE FROM sqlite_sequence WHERE name='birds'
+success!
+DELETE FROM "birds";
+DELETE FROM sqlite_sequence WHERE name='birds'
+success!
+timestamp: 2021-06-01T12:57:18.550421
+CREATE TABLE "business"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512),
+    "type" INTEGER,
+    "diet" CHAR(512),
+    "created_by" CHAR(512),
+    "created_time" TIMESTAMP
+);
+success!
