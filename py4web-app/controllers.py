@@ -172,14 +172,34 @@ def api(tablename, rec_id=None):
     policy.set('menu_section', 'GET', authorize=True, allowed_patterns=['*'])
     policy.set('menu_item', 'GET', authorize=True, allowed_patterns=['*'])
     
-    policy.set('business', 'POST', authorize=True)
-    policy.set('menu', 'POST', authorize=True)
-    policy.set('menu_section', 'POST', authorize=True)
-    policy.set('menu_item', 'POST', authorize=True)
-    policy.set('business', 'PUT', authorize=True)
-    policy.set('menu', 'PUT', authorize=True)
-    policy.set('menu_section', 'PUT', authorize=True)
-    policy.set('menu_item', 'PUT', authorize=True)
+    if request.method in ['POST', 'PUT', 'DELETE']:
+        user = get_user_id()
+        assert user is not None
+    
+        if tablename == 'business' :
+            business = db(db.business.id == rec_id).select().first()
+        if tablename == 'menu' :
+            menu = db(db.menu.id == rec_id).select().first()
+            business = db(db.business.id == menu.business).select().first()
+        if tablename == 'menu_section' :
+            menu_section = db(db.menu_section.id == rec_id).select().first()
+            menu = db(db.menu.id == menu_section.menu).select().first()
+            business = db(db.business.id == menu.business).select().first()
+        if tablename == 'menu_item' :
+            menu_item = db(db.menu_item.id == rec_id).select().as_list()[0]
+            menu_section = db(db.menu_section.id == menu_item["menu_section"]).select().as_list()[0]
+            menu = db(db.menu.id == menu_section["menu"]).select().as_list()[0]
+            business = db(db.business.id == menu["business"]).select().as_list()[0]
+        
+        if user in business["editors"] :
+            policy.set('business', 'POST', authorize=True)
+            policy.set('menu', 'POST', authorize=True)
+            policy.set('menu_section', 'POST', authorize=True)
+            policy.set('menu_item', 'POST', authorize=True)
+            policy.set('business', 'PUT', authorize=True)
+            policy.set('menu', 'PUT', authorize=True)
+            policy.set('menu_section', 'PUT', authorize=True)
+            policy.set('menu_item', 'PUT', authorize=True)
     
     # Check user owns record in database and set policy
     return RestAPI(db, policy)(request.method,
