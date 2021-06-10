@@ -323,7 +323,7 @@ export const mutations = {
 			})
 		})
 
-		business.editors = [8] // REMOVE THIS LINE
+		//business.editors = [8] // REMOVE THIS LINE
 		if (rootState.auth.user && business.editors)
 			state.editor = business.editors.includes(rootState.auth.user.id)
 		delete business.editors
