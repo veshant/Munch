@@ -196,6 +196,7 @@
 
 <script>
 import AddImageDialog from '@/components/AddImageDialog'
+import moment from 'moment'
 export default {
 	components: {
 		AddImageDialog,
@@ -220,6 +221,14 @@ export default {
 			.dispatch('biz/loadBiz', this.$route.params.slug)
 			.then(() => {
 				Object.assign(this.biz, this.$store.state.biz.business)
+				this.biz.open_time = moment(this.biz.open_time, 'LT').format(
+					'HH:mm'
+				)
+				this.biz.close_time = moment(this.biz.close_time, 'LT').format(
+					'HH:mm'
+				)
+				if (this.$store.state.biz.editor === false)
+					this.$router.push('/biz/' + this.biz.slug)
 			})
 	},
 	methods: {
@@ -231,12 +240,7 @@ export default {
 				})
 		},
 		clear() {
-			this.biz.name = ''
-			this.biz.rating = 0
-			this.biz.categories = []
-			this.biz.open_time = ''
-			this.biz.close_time = ''
-			this.biz.price_range = 0
+			this.$router.push('/biz/' + this.biz.slug + '/edit/')
 		},
 	},
 }
@@ -245,9 +249,6 @@ export default {
 <style scoped>
 .v-card {
 	transition: opacity 0.4s ease-in-out;
-}
-
-.v-card:not(.on-hover) {
 }
 
 .image-card button {

@@ -82,24 +82,33 @@ export default {
 			password: '',
 		},
 	}),
+	head() {
+		return {
+			title: 'Register',
+		}
+	},
 	methods: {
-		async userRegister() {
+		userRegister() {
 			try {
-				await this.$axios.post('/api/auth/api/register', {
-					first_name: this.register.first_name,
-					last_name: this.register.last_name,
-					email: this.register.email,
-					password: this.register.password,
-				})
-
-				await this.$auth.loginWith('local', {
-					data: {
+				this.$axios
+					.post('/api/auth/api/register', {
+						first_name: this.register.first_name,
+						last_name: this.register.last_name,
 						email: this.register.email,
 						password: this.register.password,
-					},
-				})
-
-				this.$router.push('/')
+					})
+					.then(() => {
+						this.$auth
+							.loginWith('cookie', {
+								data: {
+									email: this.register.email,
+									password: this.register.password,
+								},
+							})
+							.then(() => {
+								this.$router.push('/')
+							})
+					})
 			} catch (e) {
 				this.error = e.response.data.message
 			}

@@ -19,7 +19,11 @@
 			</v-list-item-content>
 
 			<v-list-item-avatar tile size="80" color="grey">
-				<img src="" />
+				<img
+					:src="
+						'https://source.unsplash.com/100x100/?food&' + item.id
+					"
+				/>
 			</v-list-item-avatar>
 		</v-list-item>
 
@@ -71,6 +75,7 @@ export default {
 	data: () => ({}),
 	methods: {
 		setFav() {
+			if (this.$auth.loggedIn === false) this.$router.push('/auth/login')
 			return this.$store.dispatch('biz/setFav', {
 				item: this.item,
 				section: this.section,

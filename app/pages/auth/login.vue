@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center">
 		<span class="text-h3">Login</span>
-		{{ this.$store.state.auth.user }}
+		<div class="text-body-1">Email: example@gmail.com | Password: 1234</div>
 		<v-form>
 			<v-container>
 				<v-text-field
@@ -71,6 +71,11 @@ export default {
 			password: '',
 		},
 	}),
+	head() {
+		return {
+			title: 'Login',
+		}
+	},
 	methods: {
 		loggedIn() {
 			this.user = this.$store.state.auth.user

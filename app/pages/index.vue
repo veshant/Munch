@@ -33,5 +33,10 @@ export default {
 			'You are what you eat',
 		],
 	}),
+	head() {
+		return {
+			title: "Let's Munch",
+		}
+	},
 }
 </script>

@@ -21,7 +21,7 @@
 		"eslint-plugin-vuetify": "^1.0.0-beta.8",
 		"moment": "^2.25.3",
 		"nuxt": "^2.15.3",
-		"sass": "~1.32",
+		"sass": "~1.32.6",
 		"swiper": "5.x",
 		"vue-awesome-swiper": "^4.1.1",
 		"vuetify": "^2.5.3",
@@ -46,6 +46,10 @@
 		"jest": "^26.6.3",
 		"prettier": "^2.2.1",
 		"ts-jest": "^26.5.4",
-		"vue-jest": "^3.0.4"
+		"vue-jest": "^3.0.4",
+		"sass": "~1.32.6"
+	},
+	"resolutions": {
+		"@nuxtjs/vuetify/**/sass": "1.32.6"
 	}
 }

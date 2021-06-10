@@ -91,22 +91,31 @@ export default {
 	},
 	layout: 'biz',
 	data: () => ({
+		title: '',
 		tab: null,
 	}),
+	head() {
+		return {
+			title: this.title,
+		}
+	},
 	computed: {
 		...mapState(['biz']),
 	},
 	mounted() {
 		this.$store
 			.dispatch('biz/loadBiz', this.$route.params.slug)
-			.then(() => {
-				return this.$store.dispatch('biz/loadMenu', {
-					slug: this.$route.params.slug,
-					menu: this.$route.params.menu,
-				})
-			})
-			.then((response) => {
-				return this.fetchItems(response.sections[0].id)
+			.then((biz) => {
+				this.$store
+					.dispatch('biz/loadMenu', {
+						slug: this.$route.params.slug,
+						menu: this.$route.params.menu,
+					})
+					.then((menu) => {
+						this.title = menu.name + ' | ' + biz.name
+						if (menu.sections.length > 0)
+							this.fetchItems(menu.sections[0].id)
+					})
 			})
 	},
 	methods: {

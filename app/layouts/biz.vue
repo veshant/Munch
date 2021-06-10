@@ -142,7 +142,7 @@ export default {
 			'https://source.unsplash.com/1920x1080/?food',
 			'https://source.unsplash.com/960x480/?food',
 			'https://source.unsplash.com/640x480/?food',
-			'https://source.unsplash.com/1200x800/?food',
+			'https://source.unsplash.com/1280x720/?food',
 		],
 	}),
 	computed: {

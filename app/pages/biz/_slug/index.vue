@@ -12,12 +12,23 @@
 import { mapState } from 'vuex'
 export default {
 	layout: 'biz',
-	data: () => ({}),
+	data: () => ({
+		title: '',
+	}),
+	head() {
+		return {
+			title: this.title,
+		}
+	},
 	computed: {
 		...mapState(['biz']),
 	},
 	mounted() {
-		this.$store.dispatch('biz/loadBiz', this.$route.params.slug)
+		this.$store
+			.dispatch('biz/loadBiz', this.$route.params.slug)
+			.then((res) => {
+				this.title = res.name
+			})
 	},
 	methods: {},
 }

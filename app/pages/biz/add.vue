@@ -180,6 +180,11 @@ export default {
 		open_time_picker: false,
 		close_time_picker: false,
 	}),
+	head() {
+		return {
+			title: 'Add a Business',
+		}
+	},
 	mounted() {},
 	methods: {
 		addBiz() {

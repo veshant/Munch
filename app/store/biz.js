@@ -161,6 +161,7 @@ export const actions = {
 	},
 	editBiz({ commit }, { business }) {
 		return new Promise((resolve, reject) => {
+			console.log(business)
 			axios
 				.put('/api/business/' + business.id, {
 					name: business.name,
@@ -169,8 +170,8 @@ export const actions = {
 					rating: business.rating,
 					price_range: business.price_range,
 					categories: business.categories,
-					open_time: business.open_time,
-					close_time: business.close_time,
+					open_time: '1000-01-01 ' + business.open_time + ':00',
+					close_time: '1000-01-01 ' + business.close_time + ':00',
 				})
 				.then((response) => {
 					if (response.data.code === 200) {

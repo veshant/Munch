@@ -61,14 +61,14 @@ policy = Policy()
 policy.set('*', 'GET', authorize=False, allowed_patterns=['*'])
 
 # for security reasons we disabled here all methods but GET at the policy level, to enable any of them just set authorize = True
-policy.set('*', 'PUT', authorize=True)
+policy.set('*', 'PUT', authorize=False)
 policy.set('*', 'POST', authorize=False)
-policy.set('*', 'DELETE', authorize=True)
+policy.set('*', 'DELETE', authorize=False)
 
 
 # Login Controller
 @action('addUsertoList/<tablename>/<column>/<rec_id>', method = ['PUT', 'DELETE'])
-@action.uses(db)
+@action.uses(db, auth.user)
 def api_list(tablename, column, rec_id):
     user = get_user_id()
     assert user is not None
@@ -77,7 +77,10 @@ def api_list(tablename, column, rec_id):
     row = db(db[tablename].id == rec_id).select().first()
     column_val = row[column]
     if request.method == 'PUT' :
-        column_val.append(user)
+        if column_val is not None :
+            column_val.append(user)
+        else :
+            column_val = [user]
         
     if request.method == 'DELETE' :
         method = 'PUT'
@@ -165,7 +168,7 @@ def mark_possible_upload(file_path):
 
 @action('<tablename>/', method = ['GET', 'POST'])
 @action('<tablename>/<rec_id>', method = ['GET', 'PUT', 'DELETE'])
-@action.uses(db)
+@action.uses(db, auth.user)
 def api(tablename, rec_id=None):
     policy.set('business', 'GET', authorize=True, allowed_patterns=['*'])
     policy.set('menu', 'GET', authorize=True, allowed_patterns=['*'])

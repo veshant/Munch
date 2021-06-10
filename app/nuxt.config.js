@@ -1,12 +1,21 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+	vue: {
+		config: {
+			productionTip: true,
+			devtools: true,
+		},
+	},
+	build: {
+		devtools: true,
+	},
 	server: {
 		host: '0.0.0.0', // default: localhost
 	},
 	// Global page headers: https://go.nuxtjs.dev/config-head
 	head: {
-		titleTemplate: '%s - app',
+		titleTemplate: '%s - Munch',
 		title: 'Munch',
 		meta: [
 			{ charset: 'utf-8' },
